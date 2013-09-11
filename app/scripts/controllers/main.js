@@ -8,4 +8,8 @@ angular.module('ApocAcquireApp')
       'Karma',
       'TGM'
     ];
+
+    $scope.alertit = function(thing){
+      console.log(thing);
+    };
   });
