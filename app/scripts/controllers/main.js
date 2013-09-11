@@ -5,6 +5,7 @@ angular.module('ApocAcquireApp')
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
-      'Karma'
+      'Karma',
+      'TGM'
     ];
   });
