@@ -3,9 +3,7 @@
 angular.module('ApocAcquireApp')
   .factory('player', function () {
     // Service logic
-    // ...
 
-    var meaningOfLife = 42;
     var name = "Player 1";
     var cash = 1000;
     var stocks = []; //Array of companies and stock amounts [['company1',24],['company2',24]]
@@ -27,10 +25,6 @@ angular.module('ApocAcquireApp')
 
     // Public API here
     return {
-      someMethod: function () {
-        return meaningOfLife;
-      },
-
       init: function(newName, startingCash) {
         name = newName;
         cash = startingCash;
