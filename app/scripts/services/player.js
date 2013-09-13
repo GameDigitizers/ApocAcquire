@@ -97,6 +97,9 @@ angular.module('ApocAcquireApp')
         $(stocks).each(function(n) { 
           if ($(this)[0] == chain) {
             stocks[n][1] = $(this)[1] - quantity;
+            if (stocks[n][1] < 1) {
+              stocks.splice(n,1);
+            }
           }
         });
       },
