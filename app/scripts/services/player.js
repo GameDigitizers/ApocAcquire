@@ -52,7 +52,7 @@ angular.module('ApocAcquireApp')
         var stockNames = [];
 
         $(stocks).each(function(n) { 
-          stockNames.push($(this)[0]);
+          stockNames.push(stocks[n][0]);
         });
 
         return stockNames;
@@ -73,7 +73,7 @@ angular.module('ApocAcquireApp')
       setNumStocks: function(chain, quantity) {
         $(stocks).each(function(n) { 
           if ($(this)[0] == chain) {
-            $(this)[1] = quantity;
+            stocks[n][1] = quantity;
           }
         });
       },
@@ -81,9 +81,9 @@ angular.module('ApocAcquireApp')
       addStocks: function(chain, quantity) {
         var stockExists = false;
 
-        $(stocks).each(function(n) { 
+        $(stocks).each(function(n) {
           if ($(this)[0] == chain) {
-            $(this)[1] = $(this)[1] + quantity;
+            stocks[n][1] = $(this)[1] + quantity;
             stockExists = true;
           }
         });
@@ -96,7 +96,7 @@ angular.module('ApocAcquireApp')
       removeStocks: function(chain, quantity) {
         $(stocks).each(function(n) { 
           if ($(this)[0] == chain) {
-            $(this)[1] = $(this)[1] - quantity;
+            stocks[n][1] = $(this)[1] - quantity;
           }
         });
       },
