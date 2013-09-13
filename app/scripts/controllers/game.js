@@ -30,6 +30,10 @@ angular.module('ApocAcquireApp')
     	return selectable;
     }
 
+    $scope.dashedClass = function(name) {
+    	return name.replace(/\s/g , "-")
+    }
+
     $scope.boardWidth = 13;
     $scope.boardHeight = 9;
 

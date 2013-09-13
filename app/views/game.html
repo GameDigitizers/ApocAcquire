@@ -27,7 +27,9 @@
 					</div>
 		    </div>
 		    <div class="span7">
-		    	
+		    	<ul id="stock-holder" class="nav nav-pills">
+					  <li ng-repeat="stock in player1.getStocks()" class="disabled stock {{dashedClass(stock)}}"><a>{{stock}}</a><a>{{player1.getNumStocks(stock)}}</a></li>
+					</ul>
 		    </div>
 		    <div class="span2">
 		    	<p>
