@@ -26,13 +26,13 @@ angular.module('ApocAcquireApp')
     	return stocks;
     };
 
-    var companies = ['company1', 'company2', 'company3'];
-
-    this.availTiles = buildBoard(12,9); //Array of rows and columns i.e. [[0,0],[0,1]]
-    this.availStocks = printStocks(companies, 15); //Array of companies and stock amounts [['company1',24],['company2',24]]
-    this.availChains = companies; //Array of strings
-    this.playedTiles = []; //Array of rows and columns i.e. [[0,0],[0,1]]
-    this.existingChains = []; //Array of companies and tiles i.e. [['company1',[[0,1],[0,2]]],['company2'],[[0,0]]]
+    this.init = function(boardWidth, boardHeight, companyNames, stockAmounts) {
+    	this.availTiles = buildBoard(boardWidth,boardHeight); //Array of rows and columns i.e. [[0,0],[0,1]]
+    	this.availStocks = printStocks(companyNames, stockAmounts); //Array of companies and stock amounts [['company1',24],['company2',24]]
+    	this.availChains = companyNames; //Array of strings
+    	this.playedTiles = []; //Array of rows and columns i.e. [[0,0],[0,1]]
+    	this.existingChains = []; //Array of companies and tiles i.e. [['company1',[[0,1],[0,2]]],['company2'],[[0,0]]]
+    }
 
     this.getNextPlayer = function() {
 
