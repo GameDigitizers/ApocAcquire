@@ -1,30 +1,31 @@
 'use strict';
 
+function generateArrayOfNumbers (length) {
+    var tempArray = new Array(length);
+    for (var i=0; i<tempArray.length; i++){
+        tempArray[i] = i;
+    }
+    return tempArray;
+}
+
 angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAcquireApp.services.board', 'ApocAcquireApp.services.player'])
   .controller('GameCtrl', function ($scope, Board, Player, Action) {
-    $scope.generateArrayOfNumbers = function(length) {
-    	var tempArray = new Array(length);
-        tempArray.forEach(function(elem, idx) {
-            elem = idx;
-        })
-    	return tempArray;
-    }
 
     $scope.selectableTile = function(rowPosition, columnPosition, tiles) {
     	var selectable = false;
 
     	tiles.forEach(function(elem) {
-    		if (elem.xPos == rowPosition && $elem.yPos == columnPosition) {
+    		if (elem.xPos == rowPosition && elem.yPos == columnPosition) {
     			selectable = true;
     		}
     	});
 
     	return selectable;
-    }
+    };
 
     $scope.dashedClass = function(name) {
     	return name.replace(/\s/g , "-")
-    }
+    };
 
     $scope.sortableArray = function(doubleArray, names) {
     	var sortable = [];
@@ -38,13 +39,13 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     	});
 
     	return sortable;
-    }
+    };
 
     $scope.boardWidth = 13;
     $scope.boardHeight = 9;
 
-    $scope.rows = $scope.generateArrayOfNumbers($scope.boardHeight);
-    $scope.columns = $scope.generateArrayOfNumbers($scope.boardWidth);
+    $scope.rows = generateArrayOfNumbers($scope.boardHeight);
+    $scope.columns = generateArrayOfNumbers($scope.boardWidth);
 
     $scope.companyNames = ['Festival','American','Imperial','Luxor','Worldwide','Tower','Continental'];
     $scope.startingStockCount = 25;

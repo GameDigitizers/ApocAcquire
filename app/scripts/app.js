@@ -3,7 +3,7 @@
 angular.module('ApocAcquireApp', ['ApocAcquireApp.main', 'ApocAcquireApp.game'])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/main', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
@@ -12,6 +12,6 @@ angular.module('ApocAcquireApp', ['ApocAcquireApp.main', 'ApocAcquireApp.game'])
         controller: 'GameCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/game'
       });
   });
