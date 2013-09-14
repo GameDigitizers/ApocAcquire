@@ -21,8 +21,8 @@ angular.module('ApocAcquireApp')
     $scope.selectableTile = function(rowPosition, columnPosition, tiles) {
     	var selectable = false;
 
-    	$(tiles).each(function() {
-    		if ($(this)[0] == rowPosition && $(this)[1] == columnPosition) {
+    	$(tiles).each(function(n) {
+    		if (tiles[n].xPos == rowPosition && tiles[n].yPos == columnPosition) {
     			selectable = true;
     		}
     	});
@@ -32,6 +32,20 @@ angular.module('ApocAcquireApp')
 
     $scope.dashedClass = function(name) {
     	return name.replace(/\s/g , "-")
+    }
+
+    $scope.sortableArray = function(doubleArray, names) {
+    	var sortable = [];
+
+    	$(doubleArray).each(function(i) {
+    		var myObject = {};
+    		for (var j=0;j<$(this).length;j++) { 
+					myObject[names[j]] = doubleArray[i][j];
+				}
+				sortable.push(myObject);
+    	});
+
+    	return sortable;
     }
 
     $scope.boardWidth = 13;
@@ -50,28 +64,45 @@ angular.module('ApocAcquireApp')
 
     $scope.player1 = new Player('BossToss', 2500);
 
-    $scope.player1.addTileToHand([0,2]);
-    $scope.player1.addTileToHand([2,5]);
+    $scope.player1.addTileToHand(0, 3);
+    $scope.player1.addTileToHand(2, 7);
 
-    $scope.player1.addStocks('Festival',3);
-    $scope.player1.addStocks('Continental',13);
-    $scope.player1.addStocks('American',2);
-    $scope.player1.addStocks('Imperial',2);
-    $scope.player1.addStocks('Luxor',2);
+    $scope.player1.addStocks('Festival', 3);
+    $scope.player1.addStocks('Continental', 13);
+    $scope.player1.addStocks('American', 2);
+    $scope.player1.addStocks('Imperial', 2);
+    $scope.player1.addStocks('Luxor', 2);
+    $scope.player1.addStocks('Tower', 2);
+
+    console.log($scope.player1.stocks);
     
     $scope.players = [];
     $scope.players.push(new Player('DJ Slippy Cheese', 2500));
     $scope.players.push(new Player('Orange', 2000));
     $scope.players.push(new Player('TGM', 5000000));
 
+    $scope.players[1].addStocks('Festival', 3);
+    $scope.players[1].addStocks('Continental', 13);
+    $scope.players[1].addStocks('American', 2);
+
+    // console.log(Board.getChainSize('company1'));
+		// console.log(myObject);
+
+		$scope.test = [{name:'testest', quantity:25},{name:'tester', quantity:12},{name:'test', quantity:1}]
+		// console.log($scope.test);
+		 
+		$scope.test2 = $scope.sortableArray( $scope.players[1].stocks , ['name','quantity']);
+
+		// console.log($scope.test2);
+
     $scope.action1 = new Action('place-tile', [[0,1]]);
     if ($scope.action1.isValid()) {
-     	console.log('Success');
+     	// console.log('Success');
     }
 
     $scope.action2 = new Action('trade-stock', [2,'Festival','Tower']);
     if ($scope.action2.isValid()) {
-     	console.log('Double Success');
+     	// console.log('Double Success');
     }
 
     $scope.selectBoardTile = function(row, column){
