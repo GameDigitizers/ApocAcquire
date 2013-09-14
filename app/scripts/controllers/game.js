@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ApocAcquireApp')
-  .controller('GameCtrl', function ($scope, Board, Player, action) {
+  .controller('GameCtrl', function ($scope, Board, Player, Action) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
