@@ -103,7 +103,7 @@ Player.prototype.addTileToHand = function (tile) {
   this.tilesInHand.push(tile);
 };
 
-angular.module('ApocAcquireApp')
+angular.module('ApocAcquireApp.services.player', [])
   .factory('Player', function ($injector) {
      return function(name, cash) { 
       return $injector.instantiate( Player, { 
