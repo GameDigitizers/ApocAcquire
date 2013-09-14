@@ -4,37 +4,23 @@ function Player($rootScope, newName, startingCash) {
   this.$rootScope = $rootScope;
   this.name = newName;
   this.cash = startingCash;
-  this.stocks = []; //Array of companies and stock amounts [['company1',24],['company2',24]]
-  this.tilesInHand = [];
-
-  this.arraysEqual = function(a, b) {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length != b.length) return false;
-
-    // If you don't care about the order of the elements inside
-    // the array, you should sort both arrays here.
-
-    for (var i = 0; i < a.length; ++i) {
-      if (a[i] !== b[i]) return false;
-    }
-    return true;
-  };
+  this.stocks = []; //Array of companies and stock amounts [{'chain':'company1', 'quantity':24}, ...]
+  this.tilesInHand = []; //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
 };
 
 Player.prototype.setCash = function (quantity) {
   return this.cash = quantity;
 };
 
-Player.prototype.getStocks = function (quantity) {
-  var stockNames = [];
+Player.prototype.getChains = function () {
+  var chains = [];
   var self = this;
 
   $(self.stocks).each(function(n) { 
-    stockNames.push(self.stocks[n][0]);
+    chains.push(self.stocks[n].chain);
   });
 
-  return stockNames;
+  return chains;
 };
 
 Player.prototype.getNumStocks = function (chain) {
@@ -42,8 +28,8 @@ Player.prototype.getNumStocks = function (chain) {
   var self = this;
 
   $(self.stocks).each(function(n) { 
-    if ($(this)[0] == chain) {
-      stockAmount = $(this)[1];
+    if (self.stocks[n].chain == chain) {
+      stockAmount = self.stocks[n].quantity;
     }
   });
 
@@ -54,8 +40,8 @@ Player.prototype.setNumStocks = function (chain, quantity) {
   var self = this;
 
   $(self.stocks).each(function(n) { 
-    if ($(this)[0] == chain) {
-      self.stocks[n][1] = quantity;
+    if (self.stocks[n].chain == chain) {
+      self.stocks[n].quantity = quantity;
     }
   });
 };
@@ -65,14 +51,14 @@ Player.prototype.addStocks = function (chain, quantity) {
   var self = this;
 
   $(self.stocks).each(function(n) {
-    if ($(this)[0] == chain) {
-      self.stocks[n][1] = $(this)[1] + quantity;
+    if (self.stocks[n].chain == chain) {
+      self.stocks[n].quantity = self.stocks[n].quantity + quantity;
       stockExists = true;
     }
   });
 
   if (stockExists == false) {
-    self.stocks.push([chain,quantity]);
+    self.stocks.push({'chain':chain, 'quantity':quantity});
   }
 };
 
@@ -80,26 +66,28 @@ Player.prototype.removeStocks = function (chain, quantity) {
   var self = this;
 
   $(self.stocks).each(function(n) { 
-    if ($(this)[0] == chain) {
-      self.stocks[n][1] = $(this)[1] - quantity;
-      if (self.stocks[n][1] < 1) {
+    if (self.stocks[n].chain == chain) {
+      self.stocks[n].quantity = self.stocks[n].quantity - quantity;
+      if (self.stocks[n].quantity < 1) {
         self.stocks.splice(n,1);
       }
     }
   });
 };
 
-Player.prototype.getTileFromHand = function (tile) {
+Player.prototype.getTileFromHand = function (xPos, yPos) {
+  var tile = {'xPos':xPos, 'yPos':yPos};
   var self = this;
 
   $(self.tilesInHand).each(function(n) {
-    if (self.arraysEqual($(this),tile)) {
+    if (JSON.stringify(self.tilesInHand[n]) == JSON.stringify(tile)) {
       self.tilesInHand.splice(n, 1);
     }
   });
 };
 
-Player.prototype.addTileToHand = function (tile) {
+Player.prototype.addTileToHand = function (xPos, yPos) {
+  var tile = {'xPos':xPos, 'yPos':yPos};
   this.tilesInHand.push(tile);
 };
 

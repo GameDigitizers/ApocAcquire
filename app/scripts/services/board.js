@@ -9,7 +9,7 @@ angular.module('ApocAcquireApp')
 
     	for (var a=0;a<width;a++) {
 				for (var b=0;b<height;b++) {
-					tiles.push([a,b]);
+					tiles.push({'xPos':a, 'yPos':b});
 				}
 			}
 
@@ -20,53 +20,53 @@ angular.module('ApocAcquireApp')
     	var stocks = [];
 
     	$(companyNames).each(function(n) { 
-    		stocks.push([companyNames[n],totalStocks]);
+    		stocks.push({'chain':companyNames[n],'quantity':totalStocks});
     	});
 
     	return stocks;
     };
 
-    this.init = function(boardWidth, boardHeight, companyNames, stockAmounts) {
-    	this.availTiles = buildBoard(boardWidth,boardHeight); //Array of rows and columns i.e. [[0,0],[0,1]]
-    	this.availStocks = printStocks(companyNames, stockAmounts); //Array of companies and stock amounts [['company1',24],['company2',24]]
-    	this.availChains = companyNames; //Array of strings
-    	this.playedTiles = []; //Array of rows and columns i.e. [[0,0],[0,1]]
-    	this.existingChains = []; //Array of companies and tiles i.e. [['company1',[[0,1],[0,2]]],['company2'],[[0,0]]]
+    var buildCompanies = function(companyNames) {
+    	var companies = [];
+
+    	$(companyNames).each(function(n) { 
+    		companies.push({'chain':companyNames[n]});
+    	});
+
+    	return companies;
     };
+
+    this.init = function(boardWidth, boardHeight, companyNames, stockAmounts) {
+    	this.availTiles = buildBoard(boardWidth,boardHeight); //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
+    	this.availStocks = printStocks(companyNames, stockAmounts); //Array of companies and stock amounts [{'chain':'company1', 'quantity':24}, ...]
+    	this.availChains = buildCompanies(companyNames); //Array of strings [{'chain':'company1'}, ...]
+    	this.playedTiles = []; //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
+    	this.existingChains = []; //Array of companies and tiles i.e. [{'chain':'company1', 'tiles':[{'xPos':0, 'yPos':0},{'xPos':0, 'yPos':1}]}, ...]
+    }
 
     this.getNextPlayer = function() {
 
     };
 
-    this.getAvailTiles = function() {
-    	return this.availTiles;
-    };
-
     this.getAvailStock = function(chain) {
     	var stockAmount = null;
+    	var self = this;
 
-    	$(this.availStocks).each(function(n) { 
-    		if ($(this)[0] == chain) {
-    			stockAmount = $(this)[1];
+    	$(self.availStocks).each(function(n) { 
+    		if (self.availStocks[n].chain == chain) {
+    			stockAmount = self.availStocks[n].quantity;
     		}
       });
 
       return stockAmount;
     };
 
-    this.getAvailChains = function() {
-    	return this.availChains;
-    };
-
-    this.getPlayedTiles = function() {
-    	return this.playedTiles;
-    };
-
     this.getExistingChains = function() {
     	var chains = [];
+    	var self = this;
 
-    	$(this.existingChains).each(function(n) { 
-    		chains.push($(this)[0]);
+    	$(self.existingChains).each(function(n) { 
+    		chains.push(self.existingChains[n].chain);
       });
 
     	return chains;
@@ -74,10 +74,11 @@ angular.module('ApocAcquireApp')
 
     this.getTilesInChain = function(chain) {
     	var tilesInChain = [];
+    	var self = this;
 
-    	$(this.existingChains).each(function(n) { 
-    		if ($(this)[0] == chain) {
-    			tilesInChain = $(this)[1];
+    	$(self.existingChains).each(function(n) { 
+    		if (self.existingChains[n].chain == chain) {
+    			tilesInChain = self.existingChains[n].tiles;
     		}
       });
 
@@ -86,10 +87,11 @@ angular.module('ApocAcquireApp')
 
     this.getChainSize = function(chain) {
     	var chainSize = null;
+    	var self = this;
 
-    	$(this.existingChains).each(function(n) { 
-    		if ($(this)[0] == chain) {
-    			chainSize = $(this)[1].length();
+    	$(self.existingChains).each(function(n) { 
+    		if (self.existingChains[n].chain == chain) {
+    			chainSize = self.existingChains[n].tiles.length;
     		}
       });
 
