@@ -81,8 +81,8 @@ Player.prototype.getTileFromHand = function (xPos, yPos) {
   var self = this;
 
   for (var i=0; i<self.tilesInHand.length; i++) {
-    if (JSON.stringify(self.tilesInHand[n]) == JSON.stringify(tile)) {
-      self.tilesInHand.splice(n, 1);
+    if (JSON.stringify(self.tilesInHand[i]) == JSON.stringify(tile)) {
+      self.tilesInHand.splice(i, 1);
     }
   }
 };

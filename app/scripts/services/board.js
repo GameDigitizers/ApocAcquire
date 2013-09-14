@@ -8,10 +8,10 @@ angular.module('ApocAcquireApp.services.board', [])
     	var tiles = [];
 
     	for (var a=0; a<width; a++) {
-			for (var b=0; b<height; b++) {
-				tiles.push({'xPos':a, 'yPos':b});
+				for (var b=0; b<height; b++) {
+					tiles.push({'xPos':b, 'yPos':a});
+				}
 			}
-		}
 
 		return tiles;
     };
