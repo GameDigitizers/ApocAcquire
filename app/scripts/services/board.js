@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ApocAcquireApp')
+angular.module('ApocAcquireApp.services.board', [])
   .service('Board', function Board() {
     // AngularJS will instantiate a singleton by calling 'new' on this function
 
@@ -19,8 +19,8 @@ angular.module('ApocAcquireApp')
     var printStocks = function(companyNames, totalStocks) {
     	var stocks = [];
 
-    	$(companyNames).each(function(n) { 
-    		stocks.push([companyNames[n],totalStocks]);
+    	companyNames.forEach(function(i) { 
+    		stocks.push([companyNames[i],totalStocks]);
     	});
 
     	return stocks;
