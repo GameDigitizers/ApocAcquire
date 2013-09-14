@@ -64,8 +64,10 @@ angular.module('ApocAcquireApp')
 
     $scope.player1 = new Player('BossToss', 2500);
 
-    $scope.player1.addTileToHand(0, 3);
-    $scope.player1.addTileToHand(2, 7);
+    for (var j=0;j<7;j++) { 
+    	var randomTile = Board.getRandomTile();
+    	$scope.player1.addTileToHand(randomTile.xPos, randomTile.yPos);
+    }
 
     $scope.player1.addStocks('Festival', 3);
     $scope.player1.addStocks('Continental', 13);
@@ -73,8 +75,6 @@ angular.module('ApocAcquireApp')
     $scope.player1.addStocks('Imperial', 2);
     $scope.player1.addStocks('Luxor', 2);
     $scope.player1.addStocks('Tower', 2);
-
-    console.log($scope.player1.stocks);
     
     $scope.players = [];
     $scope.players.push(new Player('DJ Slippy Cheese', 2500));
@@ -85,6 +85,7 @@ angular.module('ApocAcquireApp')
     $scope.players[1].addStocks('Continental', 13);
     $scope.players[1].addStocks('American', 2);
 
+    // console.log(Board.getRandomTile());
     // console.log(Board.getChainSize('company1'));
 		// console.log(myObject);
 
@@ -107,5 +108,12 @@ angular.module('ApocAcquireApp')
 
     $scope.selectBoardTile = function(row, column){
       console.log(row, column);
+      if ($scope.selectableTile(row, column, $scope.player1.tilesInHand)) {
+      	console.log('yepped it was clicked');
+      	$scope.player1.getTileFromHand(row,column);
+      	
+      	var randomTile = Board.getRandomTile();
+    		$scope.player1.addTileToHand(randomTile.xPos, randomTile.yPos);
+      }
     };
   });
