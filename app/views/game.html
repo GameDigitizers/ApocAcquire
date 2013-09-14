@@ -22,7 +22,15 @@
           </div>
           <div id="collapse{{$index}}" class="accordion-body in collapse" style="height: auto;">
             <div class="accordion-inner">
-              Cash: {{player.cash}}
+              <p>Cash: <span class="pull-right">${{player.cash}}</span></p>
+              <table class="table table-striped table-bordered table-condensed player-stock">
+							  <tbody>
+							    <tr ng-repeat="stock in player.stocks | orderBy:'quantity':true">
+							      <td>{{stock.chain}}</td>
+							      <td>{{stock.quantity}}</td>
+							    </tr>
+							  </tbody>
+							</table>
             </div>
           </div>
         </div>
@@ -31,7 +39,7 @@
   </div>
   <div class="row-fluid">
     <div class="span12">
-    	<h2>{{player1.getName()}} Play Area</h2>
+    	<h2>{{player1.name}} Play Area</h2>
     	<div class="row-fluid">
 		    <div class="span3">
 		    	<div id="cash" class="input-prepend">
@@ -42,7 +50,7 @@
 		    </div>
 		    <div class="span7">
 		    	<ul id="stock-holder" class="nav nav-pills">
-					  <li ng-repeat="stock in player1.getStocks()" class="disabled stock {{dashedClass(stock)}}"><a>{{stock}}</a><a>{{player1.getNumStocks(stock)}}</a></li>
+					  <li ng-repeat="stock in player1.stocks" class="disabled stock {{dashedClass(stock.chain)}}"><a>{{stock.chain}}</a><a>{{player1.getNumStocks(stock.chain)}}</a></li>
 					</ul>
 		    </div>
 		    <div class="span2">

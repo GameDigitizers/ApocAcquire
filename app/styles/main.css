@@ -1,81 +1,85 @@
 body {
-    background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+  background: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
 }
 
 .hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
+  margin: 50px auto 0 auto;
+  width: 300px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  background-color: #eee;
+  border-radius: 6px;
+  padding: 60px;
 }
 
 .hero-unit h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px;
 }
 
 .selected {
-    -webkit-box-shadow: 0 0 35px -10px green inset;
-    -moz-box-shadow: 0 0 35px -10px green inset;
-    box-shadow:0 0 35px -10px green inset;
+  -webkit-box-shadow: 0 0 35px -10px green inset;
+  -moz-box-shadow: 0 0 35px -10px green inset;
+  box-shadow:0 0 35px -10px green inset;
 }
 
 #game-board td {
-    height: 30px;
-    width: 20px;
-    text-align: center;
+  height: 30px;
+  width: 20px;
+  text-align: center;
 }
 
 #game-board td:hover {
-    background-color: #E3E3E5;
+  background-color: #E3E3E5;
 }
 
 #cash {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 #cash .add-on {
-    font-size: 30px;
-    height: 28px;
-    vertical-align: middle;
-    padding-top: 11px;
-    cursor: default;
+  font-size: 30px;
+  height: 28px;
+  vertical-align: middle;
+  padding-top: 11px;
+  cursor: default;
 }
 
 #cash span {
-    height: 45px;
-    font-size: 30px;
-    text-align: right;
-    padding-top: 11px;
-    cursor: default;
+  height: 45px;
+  font-size: 30px;
+  text-align: right;
+  padding-top: 11px;
+  cursor: default;
 }
 
 #stock-holder {
-    margin-right: -13.5%;
+  margin-right: -13.5%;
 }
 
 .stock {
-    width: 14.1%;
-    text-align: center;
-    background-color: blue;
-    border-radius: 10px 10px 0 0;
-    margin: 0 2px 10px 2px;
-    border-bottom: 2px solid black;
+  width: 14.1%;
+  text-align: center;
+  background-color: blue;
+  border-radius: 10px 10px 0 0;
+  margin: 0 2px 10px 2px;
+  border-bottom: 2px solid black;
 }
 
 .stock a {
-    color: white !important;
-    margin: auto !important;
-    padding: 10px 0 !important;
+  color: white !important;
+  margin: auto !important;
+  padding: 10px 0 !important;
 }
 
 .full-width {
-    width: 100%;
+  width: 100%;
+}
+
+.accordion-group table {
+  margin-bottom: 5px;
 }
