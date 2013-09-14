@@ -32,7 +32,7 @@ angular.module('ApocAcquireApp')
     	this.availChains = companyNames; //Array of strings
     	this.playedTiles = []; //Array of rows and columns i.e. [[0,0],[0,1]]
     	this.existingChains = []; //Array of companies and tiles i.e. [['company1',[[0,1],[0,2]]],['company2'],[[0,0]]]
-    }
+    };
 
     this.getNextPlayer = function() {
 

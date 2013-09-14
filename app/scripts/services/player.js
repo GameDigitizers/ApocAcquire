@@ -19,8 +19,8 @@ function Player($rootScope, newName, startingCash) {
       if (a[i] !== b[i]) return false;
     }
     return true;
-  }
-}
+  };
+};
 
 Player.prototype.getName = function () {
   return this.name;
@@ -103,7 +103,7 @@ Player.prototype.getTilesInHand = function () {
 
 Player.prototype.getTileFromHand = function (tile) {
   var self = this;
-  
+
   $(self.tilesInHand).each(function(n) {
     if (self.arraysEqual($(this),tile)) {
       self.tilesInHand.splice(n, 1);
