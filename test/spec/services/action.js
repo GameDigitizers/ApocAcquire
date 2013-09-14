@@ -3,16 +3,17 @@
 describe('Service: action', function () {
 
   // load the service's module
-  beforeEach(module('ApocAcquireApp'));
+  beforeEach(module('ApocAcquireApp.services.action'));
 
   // instantiate service
   var action;
-  beforeEach(inject(function (_action_) {
-    action = _action_;
+  beforeEach(inject(function (Action) {
+    action = new Action();
   }));
 
-  it('should do something', function () {
-    expect(!!action).toBe(true);
+  it('should start with invalid verbs and args', function () {
+    expect(action.verbValid).toBe(false);
+    expect(action.argsValid).toBe(false);
   });
 
 });
