@@ -13,7 +13,7 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     $scope.selectableTile = function(rowPosition, columnPosition, tiles) {
     	var selectable = false;
 
-    	tiles.forEeach(function(elem) {
+    	tiles.forEach(function(elem) {
     		if (elem.xPos == rowPosition && $elem.yPos == columnPosition) {
     			selectable = true;
     		}
