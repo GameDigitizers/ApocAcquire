@@ -19,8 +19,8 @@ angular.module('ApocAcquireApp.services.board', [])
     var printStocks = function(companyNames, totalStocks) {
     	var stocks = [];
 
-    	companyNames.forEach(function(i) { 
-    		stocks.push([companyNames[i],totalStocks]);
+    	companyNames.forEach(function(elem) { 
+    		stocks.push([elem,totalStocks]);
     	});
 
     	return stocks;
