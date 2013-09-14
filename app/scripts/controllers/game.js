@@ -2,12 +2,6 @@
 
 angular.module('ApocAcquireApp')
   .controller('GameCtrl', function ($scope, Board, Player, Action) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-
     $scope.generateArrayOfNumbers = function(length) {
     	var tempArray = [];
 
