@@ -22,14 +22,6 @@ function Player($rootScope, newName, startingCash) {
   };
 };
 
-Player.prototype.getName = function () {
-  return this.name;
-};
-
-Player.prototype.getCash = function () {
-  return this.cash;
-};
-
 Player.prototype.setCash = function (quantity) {
   return this.cash = quantity;
 };
@@ -95,10 +87,6 @@ Player.prototype.removeStocks = function (chain, quantity) {
       }
     }
   });
-};
-
-Player.prototype.getTilesInHand = function () {
-  return this.tilesInHand;
 };
 
 Player.prototype.getTileFromHand = function (tile) {
