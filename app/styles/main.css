@@ -28,7 +28,7 @@ body {
 }
 
 #game-board td {
-    height: 20px;
+    height: 30px;
     width: 20px;
     text-align: center;
 }
@@ -74,4 +74,8 @@ body {
     color: white !important;
     margin: auto !important;
     padding: 10px 0 !important;
+}
+
+.full-width {
+    width: 100%;
 }
