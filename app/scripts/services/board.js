@@ -9,7 +9,7 @@ angular.module('ApocAcquireApp')
 
     	for (var a=0;a<width;a++) {
 				for (var b=0;b<height;b++) {
-					tiles.push({'xPos':a, 'yPos':b});
+					tiles.push({'xPos':b, 'yPos':a});
 				}
 			}
 
@@ -96,5 +96,14 @@ angular.module('ApocAcquireApp')
       });
 
 			return chainSize;
+    };
+
+    this.getRandomTile = function() {
+    	var n = Math.floor((Math.random()*this.availTiles.length));
+    	var tile = this.availTiles[n];
+    	
+    	this.availTiles.splice(n, 1);
+
+    	return tile;
     };
   });
