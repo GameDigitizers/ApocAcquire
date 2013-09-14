@@ -48,8 +48,31 @@ angular.module('ApocAcquireApp')
     $scope.tiles = Board.availTiles;
     $scope.stocks = Board.availStocks;
 
-    $scope.player1 = player;
-    $scope.player1.init('BossToss', 2500);
+    $scope.player1 = new Player('BossToss', 2500);
+
+    $scope.player1.addTileToHand([0,2]);
+    $scope.player1.addTileToHand([2,5]);
+
+    $scope.player1.addStocks('Festival',3);
+    $scope.player1.addStocks('Continental',13);
+    $scope.player1.addStocks('American',2);
+    $scope.player1.addStocks('Imperial',2);
+    $scope.player1.addStocks('Luxor',2);
+    
+    $scope.players = [];
+    $scope.players.push(new Player('DJ Slippy Cheese', 2500));
+    $scope.players.push(new Player('Orange', 2000));
+    $scope.players.push(new Player('TGM', 5000000));
+
+    $scope.action1 = new Action('place-tile', [[0,1]]);
+    if ($scope.action1.isValid()) {
+     	console.log('Success');
+    }
+
+    $scope.action2 = new Action('trade-stock', [2,'Festival','Tower']);
+    if ($scope.action2.isValid()) {
+     	console.log('Double Success');
+    }
 
     $scope.selectBoardTile = function(row, column){
       console.log(row, column);
