@@ -1,28 +1,20 @@
 'use strict';
 
-angular.module('ApocAcquireApp')
+angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAcquireApp.services.board', 'ApocAcquireApp.services.player'])
   .controller('GameCtrl', function ($scope, Board, Player, Action) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-
     $scope.generateArrayOfNumbers = function(length) {
-    	var tempArray = [];
-
-    	for (var a=0;a<length;a++) {
-    		tempArray.push(a);
-    	}
-
+    	var tempArray = new Array(length);
+        tempArray.forEach(function(elem, idx) {
+            elem = idx;
+        })
     	return tempArray;
     }
 
     $scope.selectableTile = function(rowPosition, columnPosition, tiles) {
     	var selectable = false;
 
-    	$(tiles).each(function(n) {
-    		if (tiles[n].xPos == rowPosition && tiles[n].yPos == columnPosition) {
+    	tiles.forEeach(function(elem) {
+    		if (elem.xPos == rowPosition && $elem.yPos == columnPosition) {
     			selectable = true;
     		}
     	});
@@ -61,6 +53,7 @@ angular.module('ApocAcquireApp')
 
     $scope.tiles = Board.availTiles;
     $scope.stocks = Board.availStocks;
+    $scope.board = Board;
 
     $scope.player1 = new Player('BossToss', 2500);
 

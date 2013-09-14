@@ -1,36 +1,35 @@
 'use strict';
 
-angular.module('ApocAcquireApp')
+angular.module('ApocAcquireApp.services.board', [])
   .service('Board', function Board() {
     // AngularJS will instantiate a singleton by calling 'new' on this function
 
     var buildBoard = function(width, height) {
     	var tiles = [];
 
-    	for (var a=0;a<width;a++) {
-				for (var b=0;b<height;b++) {
-					tiles.push({'xPos':b, 'yPos':a});
-				}
+    	for (var a=0; a<width; a++) {
+			for (var b=0; b<height; b++) {
+				tiles.push({'xPos':a, 'yPos':b});
 			}
+		}
 
-			return tiles;
+		return tiles;
     };
 
     var printStocks = function(companyNames, totalStocks) {
     	var stocks = [];
 
-    	$(companyNames).each(function(n) { 
-    		stocks.push({'chain':companyNames[n],'quantity':totalStocks});
-    	});
-
+    	companyNames.forEach(function(companyName) { 
+    		stocks.push({'chain':companyName,'quantity':totalStocks});
+        });
     	return stocks;
     };
 
     var buildCompanies = function(companyNames) {
     	var companies = [];
 
-    	$(companyNames).each(function(n) { 
-    		companies.push({'chain':companyNames[n]});
+    	companyNames.forEach(function(company) { 
+    		companies.push({'chain':company});
     	});
 
     	return companies;
@@ -52,9 +51,9 @@ angular.module('ApocAcquireApp')
     	var stockAmount = null;
     	var self = this;
 
-    	$(self.availStocks).each(function(n) { 
-    		if (self.availStocks[n].chain == chain) {
-    			stockAmount = self.availStocks[n].quantity;
+    	self.availStocks.forEach(function(stock) { 
+    		if (stock.chain == chain) {
+    			stockAmount = stock.quantity;
     		}
       });
 
@@ -65,33 +64,31 @@ angular.module('ApocAcquireApp')
     	var chains = [];
     	var self = this;
 
-    	$(self.existingChains).each(function(n) { 
-    		chains.push(self.existingChains[n].chain);
+    	self.existingChains.forEach(function(chainElem) { 
+    		chains.push(chainElem.chain);
       });
 
     	return chains;
     };
 
     this.getTilesInChain = function(chain) {
-    	var tilesInChain = [];
     	var self = this;
 
-    	$(self.existingChains).each(function(n) { 
-    		if (self.existingChains[n].chain == chain) {
-    			tilesInChain = self.existingChains[n].tiles;
+    	self.existingChains.forEach(function(chainElem) { 
+    		if (chainElem.chain == chain) {
+    			return chainElem.tiles;
     		}
       });
-
-      return tilesInChain;
+      return [];
     };
 
     this.getChainSize = function(chain) {
     	var chainSize = null;
     	var self = this;
 
-    	$(self.existingChains).each(function(n) { 
-    		if (self.existingChains[n].chain == chain) {
-    			chainSize = self.existingChains[n].tiles.length;
+    	self.existingChains.forEach(function(chainElem) { 
+    		if (chainElem.chain == chain) {
+    			return chainElem.tiles.length;
     		}
       });
 

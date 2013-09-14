@@ -16,8 +16,8 @@ Player.prototype.getChains = function () {
   var chains = [];
   var self = this;
 
-  $(self.stocks).each(function(n) { 
-    chains.push(self.stocks[n].chain);
+  self.stocks.forEach(function(stock) { 
+    chains.push(stock.chain);
   });
 
   return chains;
@@ -27,9 +27,9 @@ Player.prototype.getNumStocks = function (chain) {
   var stockAmount = null;
   var self = this;
 
-  $(self.stocks).each(function(n) { 
-    if (self.stocks[n].chain == chain) {
-      stockAmount = self.stocks[n].quantity;
+  self.stocks.forEach(function(stock) { 
+    if (stock.chain == chain) {
+      stockAmount = stock.quantity;
     }
   });
 
@@ -39,9 +39,9 @@ Player.prototype.getNumStocks = function (chain) {
 Player.prototype.setNumStocks = function (chain, quantity) {
   var self = this;
 
-  $(self.stocks).each(function(n) { 
-    if (self.stocks[n].chain == chain) {
-      self.stocks[n].quantity = quantity;
+  self.stocks.forEach(function(stock) { 
+    if (stock.chain == chain) {
+      stock.quantity = quantity;
     }
   });
 };
@@ -50,9 +50,9 @@ Player.prototype.addStocks = function (chain, quantity) {
   var stockExists = false;
   var self = this;
 
-  $(self.stocks).each(function(n) {
-    if (self.stocks[n].chain == chain) {
-      self.stocks[n].quantity = self.stocks[n].quantity + quantity;
+  self.stocks.forEach(function(stock) {
+    if (stock.chain == chain) {
+      stock.quantity = self.stocks[n].quantity + quantity;
       stockExists = true;
     }
   });
@@ -65,25 +65,26 @@ Player.prototype.addStocks = function (chain, quantity) {
 Player.prototype.removeStocks = function (chain, quantity) {
   var self = this;
 
-  $(self.stocks).each(function(n) { 
-    if (self.stocks[n].chain == chain) {
-      self.stocks[n].quantity = self.stocks[n].quantity - quantity;
-      if (self.stocks[n].quantity < 1) {
+  for (var i=0; i<self.stocks.length; i++) {
+    if (self.stocks[i].chain == chain) {
+      self.stocks[i].quantity = self.stocks[i].quantity - quantity;
+      if (self.stocks[i].quantity < 1) {
         self.stocks.splice(n,1);
       }
+      break;
     }
-  });
+  }
 };
 
 Player.prototype.getTileFromHand = function (xPos, yPos) {
   var tile = {'xPos':xPos, 'yPos':yPos};
   var self = this;
 
-  $(self.tilesInHand).each(function(n) {
+  for (var i=0; i<self.tilesInHand.length; i++) {
     if (JSON.stringify(self.tilesInHand[n]) == JSON.stringify(tile)) {
       self.tilesInHand.splice(n, 1);
     }
-  });
+  }
 };
 
 Player.prototype.addTileToHand = function (xPos, yPos) {
@@ -91,7 +92,7 @@ Player.prototype.addTileToHand = function (xPos, yPos) {
   this.tilesInHand.push(tile);
 };
 
-angular.module('ApocAcquireApp')
+angular.module('ApocAcquireApp.services.player', [])
   .factory('Player', function ($injector) {
      return function(name, cash) { 
       return $injector.instantiate( Player, { 

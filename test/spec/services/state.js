@@ -7,12 +7,12 @@ describe('Service: state', function () {
 
   // instantiate service
   var state;
-  beforeEach(inject(function (_state_) {
-    state = _state_;
+  beforeEach(inject(function (State) {
+    state = State;
   }));
 
   it('should do something', function () {
-    expect(!!state).toBe(true);
+    expect(state.currentPlayer).toBe(0);
   });
 
 });

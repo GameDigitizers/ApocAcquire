@@ -5,8 +5,8 @@ angular.module('ApocAcquireApp')
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     this.currentPlayer = 0;
-	this.numberOfPlayers = 0;
-	this.playerList = [];
+  	this.numberOfPlayers = 0;
+  	this.playerList = [];
 
-	this.clientPlayer = '';
+  	this.clientPlayer = '';
   });

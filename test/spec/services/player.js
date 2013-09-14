@@ -3,16 +3,17 @@
 describe('Service: player', function () {
 
   // load the service's module
-  beforeEach(module('ApocAcquireApp'));
+  beforeEach(module('ApocAcquireApp.services.player'));
 
   // instantiate service
   var player;
-  beforeEach(inject(function (_player_) {
-    player = _player_;
+  var pName = 'playername';
+  beforeEach(inject(function (Player) {
+    player = new Player(pName, 0);
   }));
 
-  it('should do something', function () {
-    expect(!!player).toBe(true);
+  it('should have name set from init', function () {
+    expect(player.name).toBe(pName);
   });
 
 });
