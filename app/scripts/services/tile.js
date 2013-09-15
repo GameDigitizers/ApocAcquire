@@ -14,7 +14,7 @@ function Tile($rootScope, column, row) {
   //this.sides; add later
 };
 
-Player.prototype.getNeighbors = function () {
+Tile.prototype.getNeighbors = function () {
   //TODO: redifine this this.sides for future hexagon gameboards
   
   return true;
