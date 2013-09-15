@@ -1,15 +1,16 @@
 'use strict';
 
-function generateArrayOfNumbers (length) {
-    var tempArray = new Array(length);
-    for (var i=0; i<tempArray.length; i++){
-        tempArray[i] = i;
-    }
-    return tempArray;
-}
+angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAcquireApp.services.board', 'ApocAcquireApp.services.player', 'ApocAcquireApp.services.tile'])
+  .controller('GameCtrl', function ($scope, Board, Player, Action, Tile) {
 
-angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAcquireApp.services.board', 'ApocAcquireApp.services.player'])
-  .controller('GameCtrl', function ($scope, Board, Player, Action) {
+  	function generateArrayOfNumbers (length) {
+		  var tempArray = new Array(length);
+		  
+	    for (var i=0; i<tempArray.length; i++){
+        tempArray[i] = i;
+	    }
+	    return tempArray;
+		}
 
     $scope.selectableTile = function(rowPosition, columnPosition, tiles) {
     	var selectable = false;
@@ -41,6 +42,9 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     	return sortable;
     };
 
+    $scope.tile1 = new Tile();
+    console.log($scope.tile1.state);
+
     $scope.boardWidth = 13;
     $scope.boardHeight = 9;
 
@@ -68,6 +72,7 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     $scope.player1.addStocks('American', 2);
     $scope.player1.addStocks('Imperial', 2);
     $scope.player1.addStocks('Luxor', 2);
+    $scope.player1.addStocks('Tower', 2);
     $scope.player1.addStocks('Tower', 2);
     
     $scope.players = [];

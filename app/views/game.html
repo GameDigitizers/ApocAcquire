@@ -31,6 +31,15 @@
 							    </tr>
 							  </tbody>
 							</table>
+							<table class="table table-striped table-bordered table-condensed player-stock">
+							  <tbody>
+							    <tr ng-repeat="(stockName,company) in player.stocksTest | orderBy:company.quantity:true">
+							    	
+							      <td>{{company.quantity}}</td>
+							      <td>{{stockName}}</td>
+							    </tr>
+							  </tbody>
+							</table>
             </div>
           </div>
         </div>

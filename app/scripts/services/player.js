@@ -4,97 +4,47 @@ function Player($rootScope, newName, startingCash) {
   this.$rootScope = $rootScope;
   this.name = newName;
   this.cash = startingCash;
-  this.stocks = []; //Array of companies and stock amounts [{'chain':'company1', 'quantity':24}, ...]
+  this.stocks = {}; //Array of companies and stock amounts {'chain': [ stock objects ], ...}
   this.tilesInHand = []; //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
 };
 
-Player.prototype.setCash = function (quantity) {
-  return this.cash = quantity;
-};
-
-Player.prototype.getChains = function () {
-  var chains = [];
-  var self = this;
-
-  self.stocks.forEach(function(stock) { 
-    chains.push(stock.chain);
-  });
-
-  return chains;
-};
-
 Player.prototype.getNumStocks = function (chain) {
-  var stockAmount = null;
-  var self = this;
-
-  self.stocks.forEach(function(stock) { 
-    if (stock.chain == chain) {
-      stockAmount = stock.quantity;
-    }
-  });
-
-  return stockAmount;
+  return this.stocks[chain].length;
 };
 
-Player.prototype.setNumStocks = function (chain, quantity) {
-  var self = this;
-
-  self.stocks.forEach(function(stock) { 
-    if (stock.chain == chain) {
-      stock.quantity = quantity;
+Player.prototype.addStocks = function (stocks) {
+  stocks.forEach(function(stock) {
+    if (!(stock.name in this.stocks)) {
+      this.stocks[stock.name] = [];
     }
+
+    this.stocks[stock.name].push(stock);
   });
-};
-
-Player.prototype.addStocks = function (chain, quantity) {
-  var stockExists = false;
-  var self = this;
-
-  self.stocks.forEach(function(stock) {
-    if (stock.chain == chain) {
-      stock.quantity = self.stocks[n].quantity + quantity;
-      stockExists = true;
-    }
-  });
-
-  if (stockExists == false) {
-    self.stocks.push({'chain':chain, 'quantity':quantity});
-  }
 };
 
 Player.prototype.removeStocks = function (chain, quantity) {
-  var self = this;
+  this.stocks[chain].splice(0, quantity);
 
-  for (var i=0; i<self.stocks.length; i++) {
-    if (self.stocks[i].chain == chain) {
-      self.stocks[i].quantity = self.stocks[i].quantity - quantity;
-      if (self.stocks[i].quantity < 1) {
-        self.stocks.splice(n,1);
-      }
-      break;
+  if (this.stocks[chain].length < 1) {
+    delete this.stocks[chain];
+  }
+};
+
+Player.prototype.getTileFromHand = function (column, row) {
+  for (var i=0; i<this.tilesInHand.length; i++) {
+    if (this.tilesInHand[i].column == column && this.tilesInHand[i].row == row) {
+      return this.tilesInHand.splice(i, 1);
     }
   }
 };
 
-Player.prototype.getTileFromHand = function (xPos, yPos) {
-  var tile = {'xPos':xPos, 'yPos':yPos};
-  var self = this;
-
-  for (var i=0; i<self.tilesInHand.length; i++) {
-    if (JSON.stringify(self.tilesInHand[i]) == JSON.stringify(tile)) {
-      self.tilesInHand.splice(i, 1);
-    }
-  }
-};
-
-Player.prototype.addTileToHand = function (xPos, yPos) {
-  var tile = {'xPos':xPos, 'yPos':yPos};
+Player.prototype.addTileToHand = function (tile) {
   this.tilesInHand.push(tile);
 };
 
 angular.module('ApocAcquireApp.services.player', [])
   .factory('Player', function ($injector) {
-     return function(name, cash) { 
+    return function(name, cash) { 
       return $injector.instantiate( Player, { 
         newName: name,
         startingCash: cash
