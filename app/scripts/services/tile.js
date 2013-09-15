@@ -23,7 +23,7 @@ Player.prototype.getNeighbors = function () {
 angular.module('ApocAcquireApp.services.tile', [])
   .factory('Tile', function ($injector) {
     return function(column, row) { 
-      return $injector.instantiate( Player, { 
+      return $injector.instantiate( Tile, { 
         column: column,
         row: row
       }); 
