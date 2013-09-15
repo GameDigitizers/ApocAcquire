@@ -11,7 +11,7 @@ function Chain($rootScope, name, totalStocks, tier) {
 
   this.calculateStockValue = function () {
     if (this.tiles.length >= Chain.prototype.rules[0].length)
-      return Chain.prototype.rules[this.tier][Chain.prototype.rules[0].length];
+      return Chain.prototype.rules[this.tier][Chain.prototype.rules[0].length-1];
     else
       return Chain.prototype.rules[this.tier][this.tiles.length];
   };
