@@ -3,12 +3,12 @@
 describe('Service: stock', function () {
 
   // load the service's module
-  beforeEach(module('ApocAcquireApp'));
+  beforeEach(module('ApocAcquireApp.services.stock'));
 
   // instantiate service
   var stock;
-  beforeEach(inject(function (_stock_) {
-    stock = _stock_;
+  beforeEach(inject(function (Stock) {
+    stock = Stock;
   }));
 
   it('should do something', function () {

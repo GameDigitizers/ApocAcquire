@@ -3,12 +3,12 @@
 describe('Service: chain', function () {
 
   // load the service's module
-  beforeEach(module('ApocAcquireApp'));
+  beforeEach(module('ApocAcquireApp.services.chain'));
 
   // instantiate service
   var chain;
-  beforeEach(inject(function (_chain_) {
-    chain = _chain_;
+  beforeEach(inject(function (Chain) {
+    chain = Chain;
   }));
 
   it('should do something', function () {
