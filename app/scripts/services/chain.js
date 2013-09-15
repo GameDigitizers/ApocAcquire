@@ -10,13 +10,14 @@ function Chain($rootScope, name, totalStocks, tier) {
   this.tiles = [];
 
   this.calculateStockValue = function () {
-    if (this.tiles.length >= 41)
-      return Chain.prototype.rules[this.tier][41];
+    if (this.tiles.length >= Chain.prototype.rules[0].length)
+      return Chain.prototype.rules[this.tier][Chain.prototype.rules[0].length];
     else
       return Chain.prototype.rules[this.tier][this.tiles.length];
   };
 };
 
+// A valid rules structure must have at lest one rule.
 Chain.prototype.rules = [
   [0, 0, 200, 300, 400, 500, 600, 600, 600, 600, 600, 700, 700, 700, 700, 700, 700, 700, 700, 700, 700, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 900, 900, 900, 900, 900, 900, 900, 900, 900, 900, 1000],
   [0, 0, 300, 400, 500, 600, 700, 700, 700, 700, 700, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 900, 900, 900, 900, 900, 900, 900, 900, 900, 900, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1100],
