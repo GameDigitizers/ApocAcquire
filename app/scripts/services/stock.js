@@ -4,6 +4,7 @@ function Stock($rootScope, name, value) {
   this.$rootScope = $rootScope;
 
   this.name = name;
+  Stock.prototype.value = value;
 };
 
 Stock.prototype.value = 0;
