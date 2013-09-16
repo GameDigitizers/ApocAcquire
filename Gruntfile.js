@@ -391,16 +391,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('node', ['concurrent']);
 
-  // grunt.registerTask('node', function () {
-  //   if (child) child.kill()
-  //   child = grunt.util.spawn({ 
-  //     cmd: 'node', 
-  //     args: ['server/apoc-acquire.js']
-  //   });
-
-  //   // grunt.task.run('watch:node')
-  // });
-
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-concurrent');
 };
