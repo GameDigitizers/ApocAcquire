@@ -6,8 +6,10 @@
       <table id="game-board" class="table table-bordered">
 			  <tbody>
 			    <tr ng-repeat="row in board.gameBoard">
-            <!--<td ng-repeat="column in row" ng-click="selectBoardTile(row,column)" ng-class="{selected: selectableTile(row, column, currentPlayer.tilesInHand)}"></td>-->
-			      <td ng-repeat="cell in row" ng-click="selectBoardTile(cell.row, cell.column)" ng-class="{selected: selectableTile(cell.row, cell.column, currentPlayer.tilesInHand)}"></td>
+            <!--<td ng-repeat="column in row" ng-click="selectBoardTile(row,column)" ng-class="{selected: selectableTile(row, column, localPlayer.tilesInHand)}"></td>-->
+<!-- 			      <td ng-repeat="cell in row" ng-click="selectBoardTile(cell.row, cell.column)" ng-class="{selected: selectableTile(cell.row, cell.column, localPlayer.tilesInHand)}"></td> -->
+                  <td ng-repeat="cell in row" ng-click="selectBoardTile(cell.row, cell.column)" ng-class="cellClass(cell)"></td>
+
 			    </tr>
 			  </tbody>
 			</table>
@@ -47,12 +49,12 @@
 		    	<div id="cash" class="input-prepend">
 					  <span class="add-on">$</span>
 					  <!-- <input class="input-block-level uneditable-input" id="prependedInput" type="text"> -->
-						<span class="input-block-level uneditable-input" id="prependedInput">{{currentPlayer.cash}}</span>
+						<span class="input-block-level uneditable-input" id="prependedInput">{{localPlayer.cash}}</span>
 					</div>
 		    </div>
 		    <div class="span7">
 		    	<ul id="stock-holder" class="nav nav-pills">
-					  <li ng-repeat="(stockName, stockList) in currentPlayer.stocks" class="disabled stock {{dashedClass(stockName)}}"><a>{{stockName}}</a><a>{{currentPlayer.getNumStocks(stockName)}}</a></li>
+					  <li ng-repeat="(stockName, stockList) in localPlayer.stocks" class="disabled stock {{dashedClass(stockName)}}"><a>{{stockName}}</a><a>{{localPlayer.getNumStocks(stockName)}}</a></li>
 					</ul>
 		    </div>
 		    <div class="span2">

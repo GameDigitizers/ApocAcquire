@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: state', function () {
+describe('Service: cell', function () {
 
   // load the service's module
   beforeEach(module('ApocAcquireApp'));
 
   // instantiate service
-  var state;
-  beforeEach(inject(function (State) {
-    state = State;
+  var cell;
+  beforeEach(inject(function (_cell_) {
+    cell = _cell_;
   }));
 
   it('should do something', function () {
-    expect(state.localPlayer).toBe(0);
+    expect(!!cell).toBe(true);
   });
 
 });
