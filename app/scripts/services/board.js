@@ -1,19 +1,23 @@
 'use strict';
 
-angular.module('ApocAcquireApp.services.board', [])
-  .service('Board', function Board() {
+angular.module('ApocAcquireApp.services.board', ['ApocAcquireApp.services.tile'])
+  .service('Board', function Board(Tile) {
     // AngularJS will instantiate a singleton by calling 'new' on this function
 
-    var buildBoard = function(width, height) {
-    	var tiles = [];
+    this.buildBoard = function(width, height) {
+        this.width = width;
+        this.height = height;
 
-    	for (var a=0; a<width; a++) {
-				for (var b=0; b<height; b++) {
-					tiles.push({'xPos':b, 'yPos':a});
+    	var rows = [];
+      for (var b=0; b<height; b++) {
+        var row = [];
+        for (var a=0; a<width; a++) {
+					row.push(new Tile(b, a));
 				}
+        rows.push(row);
 			}
 
-		return tiles;
+		return rows;
     };
 
     var printStocks = function(companyNames, totalStocks) {
@@ -35,10 +39,12 @@ angular.module('ApocAcquireApp.services.board', [])
     	return companies;
     };
 
-    this.init = function(boardWidth, boardHeight, companyNames, stockAmounts) {
-    	this.availTiles = buildBoard(boardWidth,boardHeight); //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
-    	this.availStocks = printStocks(companyNames, stockAmounts); //Array of companies and stock amounts [{'chain':'company1', 'quantity':24}, ...]
-    	this.availChains = buildCompanies(companyNames); //Array of strings [{'chain':'company1'}, ...]
+    // this.init = function(boardWidth, boardHeight, companyNames, stockAmounts) {
+    this.init = function(boardWidth, boardHeight){//, companyNames, stockAmounts) {
+      this.availTiles = this.buildBoard(boardWidth,boardHeight); //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
+    	this.gameBoard = this.buildBoard(boardWidth,boardHeight); //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
+    	// this.availStocks = printStocks(companyNames, stockAmounts); //Array of companies and stock amounts [{'chain':'company1', 'quantity':24}, ...]
+    	// this.availChains = buildCompanies(companyNames); //Array of strings [{'chain':'company1'}, ...]
     	this.playedTiles = []; //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
     	this.existingChains = []; //Array of companies and tiles i.e. [{'chain':'company1', 'tiles':[{'xPos':0, 'yPos':0},{'xPos':0, 'yPos':1}]}, ...]
     }
@@ -102,5 +108,26 @@ angular.module('ApocAcquireApp.services.board', [])
     	this.availTiles.splice(n, 1);
 
     	return tile;
+    };
+
+    this.getNeighbors = function (tile) {
+        var neighbors = [];
+        if (tile.column == 0) {
+            neighbors.push({row: tile.row, column: 1});
+        } else if (tile.column == this.width-1) {
+            neighbors.push({row: tile.row, column: tile.column-1});
+        } else {
+            neighbors.push({row: tile.row, column: tile.column-1}, {row: tile.row, column: tile.column+1});
+        }
+
+        if (tile.row == 0) {
+            neighbors.push({row: 1, column: tile.column});            
+        } else if (tile.row == this.height-1) {
+            neighbors.push({row: tile.row-1, column: tile.column});
+        } else {
+            neighbors.push({row: tile.row-1, column: tile.column}, {row: tile.row+1, column: tile.column});
+        }
+
+        return neighbors;
     };
   });
