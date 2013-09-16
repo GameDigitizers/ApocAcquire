@@ -275,12 +275,7 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'coffee:dist',
-        'copy:styles',
-        'nodemon',
-        'watch',
-        'autoprefixer',
-        'connect:livereload',
-        'open'
+        'copy:styles'
       ],
       test: [
         'coffee',
@@ -354,6 +349,21 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'concurrent:server',
+      'autoprefixer',
+      'connect:livereload',
+      'open',
+      'watch'
+    ]);
+  });
+
+  grunt.registerTask('node', function (target) {
+    if (target === 'dist') {
+      return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+    }
+
+    grunt.task.run([
+      'clean:server',
       'concurrent:server'
     ]);
   });
@@ -388,8 +398,6 @@ module.exports = function (grunt) {
   ]);
 
   var child;
-
-  grunt.registerTask('node', ['concurrent']);
 
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-concurrent');
