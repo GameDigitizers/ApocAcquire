@@ -56,6 +56,10 @@ angular.module('ApocAcquireApp.services.board', ['ApocAcquireApp.services.tile',
 
     };
 
+    this.hasTiles = function () {
+      return this.availTiles.length != 0;
+    }
+
     this.getCell = function (tile) {
       return this.gameBoard[tile.row][tile.column];
     }

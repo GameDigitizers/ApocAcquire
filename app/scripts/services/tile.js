@@ -5,20 +5,12 @@ function Tile($rootScope, row, column) {
 
   this.column = column;
   this.row = row;
-  
-  // this.state = Tile.prototype.CELL_STATES['unplayed']; //'unplayed', 'played', 
-  // this.chain = undefined;
-
-  //this.sides; add later
 };
 
-// Tile.prototype.CELL_STATES = {'unplayed':0, 'played':1, 'unplayable':2};
-
-// Tile.prototype.getNeighbors = function () {
-//   //TODO: redifine this this.sides for future hexagon gameboards
-  
-//   return true;
-// };
+Tile.prototype.betterThan = function (otherTile) {
+  // This tile is better than other tile if it's in a righter column or a higher row in the same column.
+  return this.column < otherTile.column || (this.column == otherTile.column && this.row < otherTile.row);
+}
 
 angular.module('ApocAcquireApp.services.tile', [])
   .factory('Tile', function ($injector) {

@@ -17,8 +17,23 @@ angular.module('ApocAcquireApp.services.state', ['ApocAcquireApp.services.board'
     this.boardWidth = 13;
     this.boardHeight = 9;
 
-    this.command = function (verb, args) {
+    this.placeTile = function (row, column) {
+      var player = this.playerList[this.localPlayer];
+
+      var tile = player.getTileFromHand(row, column);
+      this.command('place_tile', tile);
+
+      if (Board.hasTiles()) {
+        player.addTileToHand(Board.getRandomTile()); // TODO needs to be in terms of Actions
+      }
+    }
+
+    this.command = function (verb, args, player) {
       var action = new Action(verb, args);
+
+      if (arguments.length == 2) {
+        player = this.playerList[this.currentPlayer];
+      }
 
       // TODO save to history
       action.act();
@@ -27,7 +42,8 @@ angular.module('ApocAcquireApp.services.state', ['ApocAcquireApp.services.board'
     this.beginGame = function (players) {
         Board.init(this.boardWidth, this.boardHeight);
         
-        console.log(players);
+        var starting = {player: null, tile: null};
+
         players.forEach(function (playerName) {
           var newPlayer = new Player(playerName, this.STARTING_CASH);
           this.playerList.push(newPlayer);
@@ -36,11 +52,22 @@ angular.module('ApocAcquireApp.services.state', ['ApocAcquireApp.services.board'
 
           newPlayer.addTileToHand(tile);
           this.command('place_tile', tile);
+          console.log(newPlayer.name + " placed " + tile.column + ", " + tile.row);
 
-          console.log(newPlayer);
-          console.log(tile);
+          if (!starting.tile || !starting.tile.betterThan(tile)) {
+            starting.tile = tile;
+            starting.player = newPlayer;
+          }
+
         }, this);
 
+        this.playerList.forEach(function (player) {
+          for (var i = 0; i < 6; i++) {
+            player.addTileToHand(Board.getRandomTile()); //TODO this needs to be in terms of Actions
+          }
+        }, this);
+
+        console.log(starting.player.name + " goes first");
     }
   }
 );
