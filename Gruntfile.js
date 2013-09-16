@@ -276,7 +276,11 @@ module.exports = function (grunt) {
       server: [
         'coffee:dist',
         'copy:styles',
-        'nodemon'
+        'nodemon',
+        'watch',
+        'autoprefixer',
+        'connect:livereload',
+        'open'
       ],
       test: [
         'coffee',
@@ -328,7 +332,7 @@ module.exports = function (grunt) {
         options: {
           file: 'server/apoc-acquire.js',
           watchedExtensions: ['js'],
-          ignoredFiles: ['node_modules/**', 'app/**'],
+          ignoredFiles: ['node_modules/**'],
           nodeArgs: ['--debug']
         }
       }
@@ -350,11 +354,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'concurrent:server',
-      'autoprefixer',
-      'connect:livereload',
-      'open',
-      'watch'
+      'concurrent:server'
     ]);
   });
 
