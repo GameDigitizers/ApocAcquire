@@ -4,27 +4,37 @@ angular.module('ApocAcquireApp.services.board', ['ApocAcquireApp.services.tile']
   .service('Board', function Board(Tile) {
     // AngularJS will instantiate a singleton by calling 'new' on this function
 
-    this.buildBoard = function(width, height) {
-        this.width = width;
-        this.height = height;
+    this.buildTileSlots = function (width, height) {
+      this.width = width;
+      this.height = height;
 
-    	var rows = [];
+      var rows = [];
       for (var b=0; b<height; b++) {
         var row = [];
         for (var a=0; a<width; a++) {
-					row.push(new Tile(b, a));
-				}
+          row.push(new Tile(b, a));
+        }
         rows.push(row);
-			}
+      }
 
-		return rows;
+      return rows;
+    };
+
+    this.buildTiles = function (width, height) {
+      var tiles = [];
+      for (var b = 0; b < height; b++) {
+        for (var a = 0; a < width; a++) {
+          tiles.push(new Tile(b, a));
+        }
+      }
+      return tiles;
     };
 
     var printStocks = function(companyNames, totalStocks) {
     	var stocks = [];
 
     	companyNames.forEach(function(companyName) { 
-    		stocks.push({'chain':companyName,'quantity':totalStocks});
+    		  stocks.push({'chain':companyName,'quantity':totalStocks});
         });
     	return stocks;
     };
@@ -41,12 +51,12 @@ angular.module('ApocAcquireApp.services.board', ['ApocAcquireApp.services.tile']
 
     // this.init = function(boardWidth, boardHeight, companyNames, stockAmounts) {
     this.init = function(boardWidth, boardHeight){//, companyNames, stockAmounts) {
-      this.availTiles = this.buildBoard(boardWidth,boardHeight); //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
-    	this.gameBoard = this.buildBoard(boardWidth,boardHeight); //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
-    	// this.availStocks = printStocks(companyNames, stockAmounts); //Array of companies and stock amounts [{'chain':'company1', 'quantity':24}, ...]
-    	// this.availChains = buildCompanies(companyNames); //Array of strings [{'chain':'company1'}, ...]
-    	this.playedTiles = []; //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
-    	this.existingChains = []; //Array of companies and tiles i.e. [{'chain':'company1', 'tiles':[{'xPos':0, 'yPos':0},{'xPos':0, 'yPos':1}]}, ...]
+      this.availTiles = this.buildTiles(boardWidth,boardHeight); //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
+      this.gameBoard = this.buildTileSlots(boardWidth,boardHeight); //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
+      // this.availStocks = printStocks(companyNames, stockAmounts); //Array of companies and stock amounts [{'chain':'company1', 'quantity':24}, ...]
+      // this.availChains = buildCompanies(companyNames); //Array of strings [{'chain':'company1'}, ...]
+      this.playedTiles = []; //Array of positions i.e. [{'xPos':0, 'yPos':0}, ...]
+      this.existingChains = []; //Array of companies and tiles i.e. [{'chain':'company1', 'tiles':[{'xPos':0, 'yPos':0},{'xPos':0, 'yPos':1}]}, ...]
     }
 
     this.getNextPlayer = function() {
@@ -102,10 +112,10 @@ angular.module('ApocAcquireApp.services.board', ['ApocAcquireApp.services.tile']
     };
 
     this.getRandomTile = function() {
-    	var n = Math.floor((Math.random()*this.availTiles.length));
-    	var tile = this.availTiles[n];
+    	var index = Math.floor((Math.random()*this.availTiles.length));
+    	var tile = this.availTiles[index];
     	
-    	this.availTiles.splice(n, 1);
+    	this.availTiles.splice(index, 1);
 
     	return tile;
     };
