@@ -16,11 +16,11 @@ var players = {};
 
 io.sockets.on('connection', function (socket) {
   players[socket.id] = {};
-  socket.emit('players', players);
+  io.sockets.emit('players', players);
   // players.push(socket.id); 
   socket.on('disconnect', function() {
     delete players[socket.id];
-    socket.emit('players', players);
+    io.sockets.emit('players', players);
   });
 
   socket.on('init', function(name) {
