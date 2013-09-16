@@ -12,6 +12,7 @@ var mountFolder = function (connect, dir) {
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
@@ -26,6 +27,7 @@ module.exports = function (grunt) {
     yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
   } catch (e) {}
 
+  
   grunt.initConfig({
     yeoman: yeomanConfig,
     watch: {
@@ -51,6 +53,9 @@ module.exports = function (grunt) {
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      node: {
+        files: []
       }
     },
     autoprefixer: {
@@ -282,7 +287,10 @@ module.exports = function (grunt) {
         'imagemin',
         'svgmin',
         'htmlmin'
-      ]
+      ],
+      options: {
+        logConcurrentOutput: true
+      }
     },
     karma: {
       unit: {
@@ -313,6 +321,24 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    nodemon: {
+      dev: {
+        options: {
+          file: 'server/apoc-acquire.js',
+          watchedExtensions: ['js'],
+          ignoredFiles: ['node_modules/**'],
+          nodeArgs: ['--debug']
+        }
+      }
+    },
+    node: {
+       target: {
+        tasks: ['nodemon', 'watch'],
+        options: {
+          logConcurrentOutput: true
+        }
+      }
     }
   });
 
@@ -328,6 +354,17 @@ module.exports = function (grunt) {
       'connect:livereload',
       'open',
       'watch'
+    ]);
+  });
+
+  grunt.registerTask('node', function (target) {
+    if (target === 'dist') {
+      return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+    }
+
+    grunt.task.run([
+      'clean:server',
+      'concurrent:server'
     ]);
   });
 
@@ -359,4 +396,9 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  var child;
+
+  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-concurrent');
 };

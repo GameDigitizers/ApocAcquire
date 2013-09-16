@@ -1,7 +1,21 @@
 'use strict';
 
-angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAcquireApp.services.board', 'ApocAcquireApp.services.player', 'ApocAcquireApp.services.tile', 'ApocAcquireApp.services.stock', 'ApocAcquireApp.services.state'])
-  .controller('GameCtrl', function ($scope, Board, Player, Action, Tile, Stock, State) {
+angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAcquireApp.services.board', 'ApocAcquireApp.services.player', 'ApocAcquireApp.services.tile', 'ApocAcquireApp.services.stock', 'ApocAcquireApp.services.state', 'btford.socket-io'])
+  .controller('GameCtrl', function ($scope, Board, Player, Action, Tile, Stock, State, socket) {
+
+    socket.on('begin', function(people){
+      console.log(people);
+      State.beginGame(people.players);
+    });
+
+  	function generateArrayOfNumbers (length) {
+		  var tempArray = new Array(length);
+		  
+	    for (var i=0; i<tempArray.length; i++){
+        tempArray[i] = i;
+	    }
+	    return tempArray;
+		}
 
     $scope.selectableTile = function(rowPosition, columnPosition) {
     	var selectable = false;
@@ -34,6 +48,11 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     };
 
     $scope.board = Board;
+
+    $scope.myName = ""+Math.floor((Math.random()*100)+1); 
+    $scope.$watch('myName', function() {
+      socket.emit('name', $scope.myName);
+    });
 
 
     $scope.testUI = function() {
