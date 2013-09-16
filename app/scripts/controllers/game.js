@@ -6,7 +6,7 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     $scope.selectableTile = function(rowPosition, columnPosition) {
     	var selectable = false;
 
-    	State.playerList[State.currentPlayer].tilesInHand.forEach(function(tile) {
+    	State.playerList[State.localPlayer].tilesInHand.forEach(function(tile) {
     		if (tile.row == rowPosition && tile.column == columnPosition) {
     			selectable = true;
     		}
@@ -41,7 +41,7 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
       state.beginGame(['BossToss', 'DJ Slippy Cheese', 'Orange', 'TGM']);
 
       var stock0 = new Stock('Festival', 1);
-      State.playerList[State.currentPlayer].addStocks([stock0, stock0, stock0]);
+      State.playerList[State.localPlayer].addStocks([stock0, stock0, stock0]);
 
       // $scope.players = [];
         // $scope.players[0].addStocks([stock0, stock0, stock0]);
@@ -76,18 +76,27 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     // take this out when we aren't testing
     $scope.testUI();
     
-    console.log($scope.currentPlayer);
-    $scope.currentPlayer = State.playerList[State.currentPlayer]; //1
+    console.log($scope.localPlayer);
+    $scope.localPlayer = State.playerList[State.localPlayer]; //1
     
-    var front = State.playerList.slice(0, State.currentPlayer);
-    var end = State.playerList.slice(State.currentPlayer+1);
+    var front = State.playerList.slice(0, State.localPlayer);
+    var end = State.playerList.slice(State.localPlayer+1);
     $scope.otherPlayers = front.concat(end);
+
+    $scope.cellClass = function (cell) {
+      console.log(cell.state);
+      if (cell.state == cell.CELL_STATES['played']) {
+        return 'played';
+      } else if ($scope.selectableTile(cell.row, cell.column)) {
+        return 'selected';
+      }
+    };
 
     $scope.selectBoardTile = function(row, column){
       console.log(row, column);
       if ($scope.selectableTile(row, column)) {
         console.log('yepped it was clicked');
-        State.playerList[State.currentPlayer].getTileFromHand(row, column);
+        State.playerList[State.localPlayer].getTileFromHand(row, column);
       }
     };
   });

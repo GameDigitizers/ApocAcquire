@@ -27,6 +27,38 @@ body {
   box-shadow:0 0 35px -10px green inset;
 }
 
+.played {
+  background-color: black;
+}
+
+.tower {
+  background-color: yellow;
+}
+
+.luxor {
+  background-color: pink;
+}
+
+.festival {
+  background-color: green;
+}
+
+.worldwide {
+  background-color: brown;
+}
+
+.american {
+  background-color: blue;
+}
+
+.continental {
+  background-color: teal;
+}
+
+.imperial {
+  background-color: orange;
+}
+
 #game-board td {
   height: 30px;
   width: 20px;
