@@ -77,8 +77,11 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     $scope.testUI();
     
     console.log($scope.currentPlayer);
-    $scope.currentPlayer = State.playerList[State.currentPlayer];
-    $scope.players = State.playerList;
+    $scope.currentPlayer = State.playerList[State.currentPlayer]; //1
+    
+    var front = State.playerList.slice(0, State.currentPlayer);
+    var end = State.playerList.slice(State.currentPlayer+1);
+    $scope.otherPlayers = front.concat(end);
 
     $scope.selectBoardTile = function(row, column){
       console.log(row, column);
