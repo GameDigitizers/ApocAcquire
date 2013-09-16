@@ -11,6 +11,10 @@ angular.module('ApocAcquireApp', ['ApocAcquireApp.main', 'ApocAcquireApp.game'])
         templateUrl: 'views/game.html',
         controller: 'GameCtrl'
       })
+      .when('/lobby', {
+        templateUrl: 'views/lobby.html',
+        controller: 'LobbyCtrl'
+      })
       .otherwise({
         redirectTo: '/game'
       });
