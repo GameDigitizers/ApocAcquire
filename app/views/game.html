@@ -5,8 +5,9 @@
 
       <table id="game-board" class="table table-bordered">
 			  <tbody>
-			    <tr ng-repeat="row in rows">
-			      <td ng-repeat="column in columns" ng-click="selectBoardTile(row,column)" ng-class="{selected: selectableTile(row, column, player1.tilesInHand)}"></td>
+			    <tr ng-repeat="row in board.gameBoard">
+            <!--<td ng-repeat="column in row" ng-click="selectBoardTile(row,column)" ng-class="{selected: selectableTile(row, column, player1.tilesInHand)}"></td>-->
+			      <td ng-repeat="cell in row" ng-click="selectBoardTile(cell.row, cell.column)" ng-class="{selected: selectableTile(cell.row, cell.column, player1.tilesInHand)}"></td>
 			    </tr>
 			  </tbody>
 			</table>
@@ -25,18 +26,9 @@
               <p>Cash: <span class="pull-right">${{player.cash}}</span></p>
               <table class="table table-striped table-bordered table-condensed player-stock">
 							  <tbody>
-							    <tr ng-repeat="stock in player.stocks | orderBy:'quantity':true">
-							      <td>{{stock.chain}}</td>
-							      <td>{{stock.quantity}}</td>
-							    </tr>
-							  </tbody>
-							</table>
-							<table class="table table-striped table-bordered table-condensed player-stock">
-							  <tbody>
-							    <tr ng-repeat="(stockName,company) in player.stocksTest | orderBy:company.quantity:true">
-							    	
-							      <td>{{company.quantity}}</td>
+							    <tr ng-repeat="(stockName, stockList) in player.stocks">
 							      <td>{{stockName}}</td>
+							      <td>{{stockList.length}}</td>
 							    </tr>
 							  </tbody>
 							</table>
@@ -59,7 +51,7 @@
 		    </div>
 		    <div class="span7">
 		    	<ul id="stock-holder" class="nav nav-pills">
-					  <li ng-repeat="stock in player1.stocks" class="disabled stock {{dashedClass(stock.chain)}}"><a>{{stock.chain}}</a><a>{{player1.getNumStocks(stock.chain)}}</a></li>
+					  <li ng-repeat="(stockName, stockList) in player1.stocks" class="disabled stock {{dashedClass(stockName)}}"><a>{{stockName}}</a><a>{{player1.getNumStocks(stockName)}}</a></li>
 					</ul>
 		    </div>
 		    <div class="span2">

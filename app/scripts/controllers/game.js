@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAcquireApp.services.board', 'ApocAcquireApp.services.player', 'ApocAcquireApp.services.tile'])
-  .controller('GameCtrl', function ($scope, Board, Player, Action, Tile) {
+angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAcquireApp.services.board', 'ApocAcquireApp.services.player', 'ApocAcquireApp.services.tile', 'ApocAcquireApp.services.stock'])
+  .controller('GameCtrl', function ($scope, Board, Player, Action, Tile, Stock) {
 
   	function generateArrayOfNumbers (length) {
 		  var tempArray = new Array(length);
@@ -15,8 +15,8 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     $scope.selectableTile = function(rowPosition, columnPosition, tiles) {
     	var selectable = false;
 
-    	tiles.forEach(function(elem) {
-    		if (elem.xPos == rowPosition && elem.yPos == columnPosition) {
+    	tiles.forEach(function(tile) {
+    		if (tile.row == rowPosition && tile.column == columnPosition) {
     			selectable = true;
     		}
     	});
@@ -25,7 +25,7 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     };
 
     $scope.dashedClass = function(name) {
-    	return name.replace(/\s/g , "-")
+    	return name.replace(/\s/g , "-");
     };
 
     $scope.sortableArray = function(doubleArray, names) {
@@ -42,77 +42,50 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     	return sortable;
     };
 
-    $scope.tile1 = new Tile();
-    console.log($scope.tile1.state);
-
-    $scope.boardWidth = 13;
-    $scope.boardHeight = 9;
-
-    $scope.rows = generateArrayOfNumbers($scope.boardHeight);
-    $scope.columns = generateArrayOfNumbers($scope.boardWidth);
-
-    $scope.companyNames = ['Festival','American','Imperial','Luxor','Worldwide','Tower','Continental'];
-    $scope.startingStockCount = 25;
-
-    Board.init($scope.boardWidth, $scope.boardHeight, $scope.companyNames, $scope.startingStockCount);
-
-    $scope.tiles = Board.availTiles;
-    $scope.stocks = Board.availStocks;
+    var boardWidth = 13;
+    var boardHeight = 9;
     $scope.board = Board;
+    $scope.board.init(boardWidth, boardHeight);
 
-    $scope.player1 = new Player('BossToss', 2500);
+    $scope.testUI = function() {
+      $scope.player1 = new Player('BossToss', 2500); //"me" current player w/e
 
-    for (var j=0;j<7;j++) { 
-    	var randomTile = Board.getRandomTile();
-    	$scope.player1.addTileToHand(randomTile.xPos, randomTile.yPos);
-    }
+      // for (var j=0;j<7;j++) { 
+      // 	var randomTile = Board.getRandomTile();
+      // 	$scope.player1.addTileToHand(randomTile.xPos, randomTile.yPos);
+      // }
+      
+      var stock0 = new Stock('Festival', 200);
+      var stock0s = [stock0, stock0, stock0];
+      $scope.player1.addStocks(stock0s);
 
-    $scope.player1.addStocks('Festival', 3);
-    $scope.player1.addStocks('Continental', 13);
-    $scope.player1.addStocks('American', 2);
-    $scope.player1.addStocks('Imperial', 2);
-    $scope.player1.addStocks('Luxor', 2);
-    $scope.player1.addStocks('Tower', 2);
-    $scope.player1.addStocks('Tower', 2);
-    
-    $scope.players = [];
-    $scope.players.push(new Player('DJ Slippy Cheese', 2500));
-    $scope.players.push(new Player('Orange', 2000));
-    $scope.players.push(new Player('TGM', 5000000));
+      var tile0 = new Tile(0,1);
+      var tile1 = new Tile(2,1);
+      $scope.player1.addTileToHand(tile0);
+      $scope.player1.addTileToHand(tile1);
+      
+      $scope.players = [];
+      $scope.players.push(new Player('DJ Slippy Cheese', 2500));
+      $scope.players.push(new Player('Orange', 2000));
+      $scope.players.push(new Player('TGM', 5000000));
 
-    $scope.players[1].addStocks('Festival', 3);
-    $scope.players[1].addStocks('Continental', 13);
-    $scope.players[1].addStocks('American', 2);
+      var stock1 = new Stock('Continental', 200);
 
-    // console.log(Board.getRandomTile());
-    // console.log(Board.getChainSize('company1'));
-		// console.log(myObject);
+      $scope.players[1].addStocks([stock1, stock0, stock0]);
+      
+      var action1 = new Action('place-tile', tile0);
 
-		$scope.test = [{name:'testest', quantity:25},{name:'tester', quantity:12},{name:'test', quantity:1}]
-		// console.log($scope.test);
-		 
-		$scope.test2 = $scope.sortableArray( $scope.players[1].stocks , ['name','quantity']);
+      var action2 = new Action('trade-stock', [2,'Festival','Tower']);
+    };
 
-		// console.log($scope.test2);
-
-    $scope.action1 = new Action('place-tile', [[0,1]]);
-    if ($scope.action1.isValid()) {
-     	// console.log('Success');
-    }
-
-    $scope.action2 = new Action('trade-stock', [2,'Festival','Tower']);
-    if ($scope.action2.isValid()) {
-     	// console.log('Double Success');
-    }
+    // take this out when we aren't testing
+    $scope.testUI();
 
     $scope.selectBoardTile = function(row, column){
       console.log(row, column);
       if ($scope.selectableTile(row, column, $scope.player1.tilesInHand)) {
       	console.log('yepped it was clicked');
-      	$scope.player1.getTileFromHand(row,column);
-      	
-      	var randomTile = Board.getRandomTile();
-    		$scope.player1.addTileToHand(randomTile.xPos, randomTile.yPos);
+      	$scope.player1.getTileFromHand(row, column);
       }
     };
   });
