@@ -9,6 +9,9 @@ function Player($rootScope, newName, startingCash) {
 };
 
 Player.prototype.getNumStocks = function (chain) {
+  if (!(chain in this.stocks)) {
+    return 0;
+  }
   return this.stocks[chain].length;
 };
 
@@ -19,7 +22,7 @@ Player.prototype.addStocks = function (stocks) {
     }
 
     this.stocks[stock.name].push(stock);
-  });
+  }, this);
 };
 
 Player.prototype.removeStocks = function (chain, quantity) {
@@ -30,7 +33,7 @@ Player.prototype.removeStocks = function (chain, quantity) {
   }
 };
 
-Player.prototype.getTileFromHand = function (column, row) {
+Player.prototype.getTileFromHand = function (row, column) {
   for (var i=0; i<this.tilesInHand.length; i++) {
     if (this.tilesInHand[i].column == column && this.tilesInHand[i].row == row) {
       return this.tilesInHand.splice(i, 1);
