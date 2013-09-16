@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ApocAcquireApp', ['ApocAcquireApp.main', 'ApocAcquireApp.game'])
+angular.module('ApocAcquireApp', ['ApocAcquireApp.main', 'ApocAcquireApp.game', 'ApocAcquireApp.controllers.lobby'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/main', {
@@ -10,6 +10,10 @@ angular.module('ApocAcquireApp', ['ApocAcquireApp.main', 'ApocAcquireApp.game'])
       .when('/game', {
         templateUrl: 'views/game.html',
         controller: 'GameCtrl'
+      })
+      .when('/lobby', {
+        templateUrl: 'views/lobby.html',
+        controller: 'LobbyCtrl'
       })
       .otherwise({
         redirectTo: '/game'

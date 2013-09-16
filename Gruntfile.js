@@ -12,6 +12,7 @@ var mountFolder = function (connect, dir) {
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
@@ -26,6 +27,7 @@ module.exports = function (grunt) {
     yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
   } catch (e) {}
 
+  
   grunt.initConfig({
     yeoman: yeomanConfig,
     watch: {
@@ -51,6 +53,9 @@ module.exports = function (grunt) {
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      node: {
+        files: []
       }
     },
     autoprefixer: {
@@ -270,7 +275,8 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'coffee:dist',
-        'copy:styles'
+        'copy:styles',
+        'nodemon'
       ],
       test: [
         'coffee',
@@ -282,7 +288,10 @@ module.exports = function (grunt) {
         'imagemin',
         'svgmin',
         'htmlmin'
-      ]
+      ],
+      options: {
+        logConcurrentOutput: true
+      }
     },
     karma: {
       unit: {
@@ -311,6 +320,24 @@ module.exports = function (grunt) {
           '<%= yeoman.dist %>/scripts/scripts.js': [
             '<%= yeoman.dist %>/scripts/scripts.js'
           ]
+        }
+      }
+    },
+    nodemon: {
+      dev: {
+        options: {
+          file: 'server/apoc-acquire.js',
+          watchedExtensions: ['js'],
+          ignoredFiles: ['node_modules/**', 'app/**'],
+          nodeArgs: ['--debug']
+        }
+      }
+    },
+    node: {
+       target: {
+        tasks: ['nodemon', 'watch'],
+        options: {
+          logConcurrentOutput: true
         }
       }
     }
@@ -359,4 +386,11 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  var child;
+
+  grunt.registerTask('node', ['concurrent']);
+
+  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-concurrent');
 };

@@ -40,7 +40,8 @@
     "karma": "~0.10.2",
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "connect": "2.9.0",
-    "socket.io": "0.9.16"
+    "socket.io": "0.9.16",
+    "grunt-nodemon": "~0.1.1"
   },
   "engines": {
     "node": ">=0.8.0"
