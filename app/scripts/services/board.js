@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('ApocAcquireApp.services.board', ['ApocAcquireApp.services.tile'])
-  .service('Board', function Board(Tile) {
+angular.module('ApocAcquireApp.services.board', ['ApocAcquireApp.services.tile', 'ApocAcquireApp.services.cell'])
+  .service('Board', function Board(Tile, Cell) {
     // AngularJS will instantiate a singleton by calling 'new' on this function
 
     this.buildBoard = function (width, height) {

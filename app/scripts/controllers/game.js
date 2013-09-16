@@ -84,7 +84,6 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
     $scope.otherPlayers = front.concat(end);
 
     $scope.cellClass = function (cell) {
-      console.log(cell.state);
       if (cell.state == cell.CELL_STATES['played']) {
         return 'played';
       } else if ($scope.selectableTile(cell.row, cell.column)) {

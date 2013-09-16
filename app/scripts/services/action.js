@@ -1,13 +1,13 @@
 'use strict';
 
-function Action($rootScope, requestedVerb, requestedArgs, Board) {
+function Action($rootScope, requestedVerb, requestedArgs, board) {
   this.$rootScope = $rootScope;
   this.verb = requestedVerb;
   this.args = requestedArgs;
-  this.Board = Board;
-  var self = this;
+  this.board = board;
+
   this.act = function(){
-    Action.prototype.VERB_ACTIONS[this.verb](self, self.args);
+    Action.prototype.VERB_ACTIONS[this.verb].call(this, this.args);
   }
 }
 
@@ -16,11 +16,11 @@ Action.prototype.VALID_VERBS = function(){
 }
 
 Action.prototype.VERB_ACTIONS = {
-  place_tile: function (self, tile) {
-    var cell = self.Board.getCell(tile);
+  place_tile: function (tile) {
+    var cell = this.board.getCell(tile);
     cell.state = Cell.prototype.CELL_STATES['played'];
 
-    self.Board.playedTiles.push(tile);
+    this.board.playedTiles.push(tile);
   }, 
   buy_stock: function (args) { 
   }, 
@@ -40,7 +40,7 @@ angular.module('ApocAcquireApp.services.action', ['ApocAcquireApp.services.tile'
       return $injector.instantiate( Action, { 
         requestedVerb: verb,
         requestedArgs: args,
-        Board: Board
+        board: Board
       }); 
     };
   });

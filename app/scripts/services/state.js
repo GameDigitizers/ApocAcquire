@@ -26,6 +26,7 @@ angular.module('ApocAcquireApp.services.state', ['ApocAcquireApp.services.board'
 
     this.beginGame = function (players) {
         Board.init(this.boardWidth, this.boardHeight);
+        console.log(Board.gameBoard);
         
         console.log(players);
         players.forEach(function (playerName) {
@@ -34,11 +35,7 @@ angular.module('ApocAcquireApp.services.state', ['ApocAcquireApp.services.board'
 
           var tile = Board.getRandomTile();
 
-          newPlayer.addTileToHand(tile);
           this.command('place_tile', tile);
-
-          console.log(newPlayer);
-          console.log(tile);
         }, this);
 
     }

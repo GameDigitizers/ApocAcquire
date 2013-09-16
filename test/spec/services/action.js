@@ -11,9 +11,9 @@ describe('Service: action', function () {
     action = new Action();
   }));
 
-  it('should start with invalid verbs and args', function () {
-    expect(action.verbValid).toBe(false);
-    expect(action.argsValid).toBe(false);
-  });
+  // it('should start with invalid verbs and args', function () {
+  //   expect(action.verbValid).toBe(false);
+  //   expect(action.argsValid).toBe(false);
+  // });
 
 });
