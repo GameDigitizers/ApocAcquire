@@ -1,6 +1,6 @@
 'use strict';
 
-function Tile($rootScope, column, row) {
+function Tile($rootScope, row, column) {
   this.$rootScope = $rootScope;
 
   this.column = column;
@@ -22,7 +22,7 @@ Tile.prototype.getNeighbors = function () {
 
 angular.module('ApocAcquireApp.services.tile', [])
   .factory('Tile', function ($injector) {
-    return function(column, row) { 
+    return function(row, column) { 
       return $injector.instantiate( Tile, { 
         column: column,
         row: row
