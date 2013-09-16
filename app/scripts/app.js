@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ApocAcquireApp', ['ApocAcquireApp.main', 'ApocAcquireApp.game'])
+angular.module('ApocAcquireApp', ['ApocAcquireApp.main', 'ApocAcquireApp.game', 'ApocAcquireApp.controllers.lobby'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/main', {
