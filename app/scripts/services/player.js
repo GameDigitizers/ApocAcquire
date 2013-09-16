@@ -36,7 +36,7 @@ Player.prototype.removeStocks = function (chain, quantity) {
 Player.prototype.getTileFromHand = function (row, column) {
   for (var i=0; i<this.tilesInHand.length; i++) {
     if (this.tilesInHand[i].column == column && this.tilesInHand[i].row == row) {
-      return this.tilesInHand.splice(i, 1);
+      return this.tilesInHand.splice(i, 1)[0];
     }
   }
 };

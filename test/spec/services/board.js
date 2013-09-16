@@ -16,6 +16,15 @@ describe('Service: board', function () {
     board.init(boardWidth, boardHeight);
   }));
 
+  it('should have tiles on after init', function () {
+    expect(board.hasTiles()).toBeTruthy();
+  });
+
+  it('hasTiles should return false if out of tiles', function () {
+    board.availTiles = [];
+    expect(board.hasTiles()).toBeFalsy();
+  });
+
   it('should have 1-dimensional availTiles', function () {
     expect(board.availTiles.length).toBe(boardWidth * boardHeight);
   });
@@ -43,6 +52,6 @@ describe('Service: board', function () {
 
     expect(tile.row).toEqual(cell.row);
     expect(tile.column).toEqual(cell.column);
-  })
+  });
 
 });

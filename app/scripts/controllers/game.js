@@ -68,15 +68,14 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
 
       // $scope.players[1].addStocks([stock1, stock0, stock0]);
       
-      var action1 = new Action('place-tile', new Tile(0, 1));
+      // var action1 = new Action('place-tile', new Tile(0, 1));
 
-      var action2 = new Action('trade-stock', [2,'Festival','Tower']);
+      // var action2 = new Action('trade-stock', [2,'Festival','Tower']);
     };
 
     // take this out when we aren't testing
     $scope.testUI();
     
-    console.log($scope.localPlayer);
     $scope.localPlayer = State.playerList[State.localPlayer]; //1
     
     var front = State.playerList.slice(0, State.localPlayer);
@@ -95,7 +94,9 @@ angular.module('ApocAcquireApp.game', ['ApocAcquireApp.services.action', 'ApocAc
       console.log(row, column);
       if ($scope.selectableTile(row, column)) {
         console.log('yepped it was clicked');
-        State.playerList[State.localPlayer].getTileFromHand(row, column);
+        State.placeTile(row, column);
+        // State.playerList[State.localPlayer].getTileFromHand(row, column);
+        // State.playerList[State.localPlayer].addTileToHand(Board.getRandomTile());
       }
     };
   });

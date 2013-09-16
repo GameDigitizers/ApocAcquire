@@ -16,7 +16,7 @@ describe('Service: cell', function () {
     cell = new Cell(cellRow, cellColumn);
   }));
 
-  it('should do something', function () {
+  it('should initialize correctly', function () {
     expect(cell.row).toBe(cellRow);
     expect(cell.column).toBe(cellColumn);
     expect(cell.state).toBe(DEFAULT_STATE);
