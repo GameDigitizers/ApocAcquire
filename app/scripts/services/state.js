@@ -16,19 +16,19 @@ angular.module('ApocAcquireApp.services.state', ['ApocAcquireApp.services.board'
     this.boardHeight = 9;
 
     this.beginGame = function (players) {
-        Board.init(this.boardWidth, this.boardHeight);
-        
-        console.log(players);
-        players.forEach(function (playerName) {
-          var newPlayer = new Player(playerName, this.STARTING_CASH);
-          this.playerList.push(newPlayer);
+      Board.init(this.boardWidth, this.boardHeight);
+      
+      console.log(players);
+      players.forEach(function (playerName) {
+        var newPlayer = new Player(playerName, this.STARTING_CASH);
+        this.playerList.push(newPlayer);
 
-          var tile = Board.getRandomTile();
-          newPlayer.addTileToHand(tile);
+        var tile = Board.getRandomTile();
+        newPlayer.addTileToHand(tile);
 
-          console.log(newPlayer);
-          console.log(tile);
-        }, this);
+        console.log(newPlayer);
+        console.log(tile);
+      }, this);
 
     }
   }

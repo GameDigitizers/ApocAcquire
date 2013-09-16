@@ -8,6 +8,14 @@ connect()
 .use(connect.directory('app'))
 );
 
+Object.size = function(obj) {
+  var size = 0, key;
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
+
 var io = require('socket.io').listen(server);
 
 server.listen(2013);
@@ -17,14 +25,29 @@ var players = {};
 io.sockets.on('connection', function (socket) {
   players[socket.id] = {};
   io.sockets.emit('players', players);
-  // players.push(socket.id); 
-  socket.on('disconnect', function() {
-    delete players[socket.id];
-    io.sockets.emit('players', players);
-  });
+
+  if (Object.size(players) == 4) {
+    var names = [];
+    var playerSockets = Object.getOwnPropertyNames(players);
+    playerSockets.forEach(function(socketId){
+      names.push(players[socketId].name);
+    })
+    io.sockets.emit('begin', {players: names});
+  }
 
   socket.on('init', function(name) {
     players[socket.id].name = name;
+  });
+
+  socket.on('name', function(name){
+    console.log('got name from client:');
+    console.log(name);
+    players[socket.id].name = name;
+  });
+  
+  socket.on('disconnect', function() {
+    delete players[socket.id];
+    io.sockets.emit('players', players);
   });
 });
 // io.sockets.on('connection', function (socket) {
